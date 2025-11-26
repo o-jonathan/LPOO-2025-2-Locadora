@@ -131,4 +131,12 @@ public class Locacao {
     public void setVendedor(Funcionario vendedor) {
         this.vendedor = vendedor;
     }
+    
+    
+    
+    /* Methods */
+    @Override
+    public String toString() {
+        return produto.toString();
+    }
 }

@@ -88,4 +88,12 @@ public class Jogo {
     public void setLocado(boolean locado) {
         this.locado = locado;
     }
+    
+    
+    
+    /* Methods */
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

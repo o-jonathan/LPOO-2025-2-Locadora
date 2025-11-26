@@ -9,8 +9,11 @@ package model;
  * @author Jonathan
  */
 public abstract class Pessoa {
+    /* Attributes */
     private String nome;
     private String cpf;
+    
+    
     
     /* Getters and Setters */
     /* Nome */
@@ -29,4 +32,11 @@ public abstract class Pessoa {
         this.cpf = cpf;
     }
     
+    
+    
+    /* Methods */
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

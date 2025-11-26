@@ -4,6 +4,10 @@
 
 ```mermaid
 classDiagram
+    namespace model {
+        Class Pessoa
+    }
+
     class Pessoa {
         <<abstract>>
         - nome : String

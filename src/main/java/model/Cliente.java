@@ -54,5 +54,5 @@ public class Cliente extends Pessoa {
     }
     public void setLocacoes(List<Locacao> locacoes) {    
         this.locacoes = locacoes;
-    }
+    }    
 }
