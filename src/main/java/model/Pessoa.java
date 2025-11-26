@@ -39,4 +39,11 @@ public abstract class Pessoa {
     public String toString() {
         return nome;
     }
+    
+    public String showData() {
+        String aux = "";
+        aux += "Nome: " + nome;
+        aux += "\nCPF: " + cpf;
+        return aux;
+    }
 }

@@ -66,4 +66,14 @@ public class Funcionario extends Pessoa {
     public void setLocacoes(List<Locacao> locacoes) {
         this.locacoes = locacoes;
     }
+    
+    
+    
+    /* Methods */
+    @Override
+    public String showData() {
+        String aux = super.showData();
+        aux += "\nSalário: R$" + Util.formatDouble(salario);
+        return aux;
+    }
 }

@@ -96,4 +96,12 @@ public class Jogo {
     public String toString() {
         return nome;
     }
+    
+    public String showData() {
+        String aux = "";
+        aux += "Nome: " + nome;
+        aux += "\nValor: R$" + Util.formatDouble(valor);
+        aux += "\nEstado: " + (locado?"Locado":"Disponível");
+        return aux;
+    }
 }

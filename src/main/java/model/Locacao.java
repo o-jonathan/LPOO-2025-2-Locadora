@@ -139,4 +139,16 @@ public class Locacao {
     public String toString() {
         return produto.toString();
     }
+    
+    public String showData() {
+        String aux = "";
+        aux += "Cliente: " + cliente.toString();
+        aux += "\nVendedor: " + vendedor.toString();
+        aux += "\nProduto: " + produto.toString();
+        aux += "\nValor: R$" + Util.formatDouble(valor);
+        aux += "\nPrazo: " + prazo;
+        aux += "\nData Compra: " + Util.formatDateTime(dataLocacao);
+        aux += "\nData Devolução: " + Util.formatDateTime(dataDevolucao);
+        return aux;
+    }
 }
