@@ -185,11 +185,47 @@ public class ListaClienteJF extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // SOMETHING
+        if (tblClientes.getSelectedRow() != 1) {
+            Cliente obj = (Cliente) tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
+            
+            CadastroClienteJD telaEdicao = new CadastroClienteJD(this, rootPaneCheckingEnabled);
+            telaEdicao.setCliente(obj);
+            
+            telaEdicao.setVisible(true);
+            
+            Cliente obj_r = telaEdicao.getCliente();
+            
+            if (obj_r != null) {
+                try {
+                    dao.persist(obj_r);
+                    loadTable();
+                } catch (Exception e) {
+                    System.err.println("Erro ao editar cliente:\n" + e);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Cliente!");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        // SOMETHING
+        if (tblClientes.getSelectedRow() != 1) {
+            Cliente obj = (Cliente) tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
+            
+            int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover " + obj + "?");
+            
+            if (op == JOptionPane.YES_OPTION) {
+                try {
+                    dao.remover(obj);
+                    loadTable();
+                    JOptionPane.showMessageDialog(rootPane, "Cliente removido com sucesso!");
+                } catch (Exception e) {
+                    System.err.println("Erro ao editar cliente:\n" + e);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Cliente!");
+        }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
