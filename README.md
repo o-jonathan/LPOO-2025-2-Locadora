@@ -1,11 +1,16 @@
 # LPOO 2025/2 -- Locadora OJogos
 
 ---
+## Model Diagram
 
 ```mermaid
 classDiagram
     namespace model {
-        Class Pessoa
+        class Pessoa
+        class Cliente
+        class Funcionario
+        class Jogo
+        class Locacao
     }
 
     class Pessoa {

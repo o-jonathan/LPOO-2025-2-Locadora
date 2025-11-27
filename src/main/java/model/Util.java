@@ -7,6 +7,7 @@ package model;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,5 +28,18 @@ public class Util {
     
     public static String formatDateTime(LocalDateTime date) {
         return datetimef.format(date);
+    }
+    
+    public static String formatCPF(String cpf) {
+        return cpf.replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+    }
+    
+    public static boolean validateCPF(String cpf) {
+        // Decidi deliberadamente não verificar os dígitos verificadores :D
+        if (!cpf.matches("[0-9]{11}")) {
+            JOptionPane.showMessageDialog(null, "CPF Inválido!\nO CPF deve conter 11 caracteres numéricos.");
+            return false;
+        }
+        return true;
     }
 }

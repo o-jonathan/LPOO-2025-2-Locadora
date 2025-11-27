@@ -4,10 +4,13 @@
  */
 package model;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  *
  * @author Jonathan
  */
+@MappedSuperclass
 public abstract class Pessoa {
     /* Attributes */
     private String nome;
@@ -43,7 +46,7 @@ public abstract class Pessoa {
     public String showData() {
         String aux = "";
         aux += "Nome: " + nome;
-        aux += "\nCPF: " + cpf;
+        aux += "\nCPF: " + Util.formatCPF(cpf);
         return aux;
     }
 }
