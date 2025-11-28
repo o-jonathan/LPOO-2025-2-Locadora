@@ -1,10 +1,8 @@
 # LPOO 2025/2 — Locadora OJogos
 
----
-## Descrição
 O sistema Locadora OJogos consiste na gerência de uma locadora de jogos, possibilitando registrar clientes, funcionários, jogos e locações.
 
----
+
 ## Diagrama de Classes
 
 ```mermaid
@@ -53,7 +51,7 @@ classDiagram
     Funcionario --o Locacao
     Jogo --o Locacao
 ```
----
+
 ## Features
 
 O sistema, atualmente, pode:
