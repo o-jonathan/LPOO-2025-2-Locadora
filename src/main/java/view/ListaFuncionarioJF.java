@@ -6,34 +6,35 @@ package view;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Cliente;
-import model.dao.ClienteDAO;
+import model.Funcionario;
+import model.dao.FuncionarioDAO;
 
 /**
  *
  * @author Jonathan
  */
-public class ListaClienteJF extends javax.swing.JFrame {
+public class ListaFuncionarioJF extends javax.swing.JFrame {
     
-    ClienteDAO dao;
+    FuncionarioDAO dao;
 
     /**
-     * Creates new form ListaClienteJF
+     * Creates new form ListaFuncionarioJF
      */
-    public ListaClienteJF() {
+    public ListaFuncionarioJF() {
         initComponents();
-        dao = new ClienteDAO();
+        dao = new FuncionarioDAO();
         loadTable();
     }
     
     public void loadTable() {
-        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblFuncionarios.getModel();
         model.setNumRows(0);
         
-        for (Cliente obj : dao.listaClientes()) {
+        for (Funcionario obj : dao.listaClientes()) {
             Object[] linha = {
                 obj,
-                obj.getCpf()
+                obj.getCpf(),
+                obj.getSalario()
             };
             model.addRow(linha);
         }
@@ -49,42 +50,28 @@ public class ListaClienteJF extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
-        btnNovo = new javax.swing.JButton();
-        btnInfo = new javax.swing.JButton();
+        tblFuncionarios = new javax.swing.JTable();
         btnEditar = new javax.swing.JButton();
+        btnInfo = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(510, 450));
 
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tblFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "CPF"
+                "Nome", "CPF", "Salário"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -95,13 +82,12 @@ public class ListaClienteJF extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane2.setViewportView(tblClientes);
+        jScrollPane1.setViewportView(tblFuncionarios);
 
-        btnNovo.setText("Novo");
-        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -112,10 +98,10 @@ public class ListaClienteJF extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnNovoActionPerformed(evt);
             }
         });
 
@@ -133,6 +119,7 @@ public class ListaClienteJF extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,8 +127,7 @@ public class ListaClienteJF extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRemover)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInfo))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnInfo)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
@@ -149,19 +135,15 @@ public class ListaClienteJF extends javax.swing.JFrame {
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(85, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditar)
-                            .addComponent(btnRemover)
-                            .addComponent(btnInfo)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNovo)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRemover)
+                    .addComponent(btnNovo)
+                    .addComponent(btnEditar)
+                    .addComponent(btnInfo))
                 .addGap(49, 49, 49))
         );
 
@@ -169,48 +151,48 @@ public class ListaClienteJF extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        CadastroClienteJD telaCadastro = new CadastroClienteJD(this, rootPaneCheckingEnabled);
+        CadastroFuncionarioJD telaCadastro = new CadastroFuncionarioJD(this, rootPaneCheckingEnabled);
         telaCadastro.setVisible(true);
         
-        Cliente novo = telaCadastro.getCliente();
+        Funcionario novo = telaCadastro.getFuncionario();
         
         if (novo != null) {
             try {
                 dao.persist(novo);
                 loadTable();
             } catch (Exception e) {
-                System.err.println("Erro ao adicionar cliente:\n" + e);
+                System.err.println("Erro ao adicionar funcionário:\n" + e);
             }
         }
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblClientes.getSelectedRow() != 1) {
-            Cliente obj = (Cliente) tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
+        if (tblFuncionarios.getSelectedRow() != 1) {
+            Funcionario obj = (Funcionario) tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0);
             
-            CadastroClienteJD telaEdicao = new CadastroClienteJD(this, rootPaneCheckingEnabled);
-            telaEdicao.setCliente(obj);
+            CadastroFuncionarioJD telaEdicao = new CadastroFuncionarioJD(this, rootPaneCheckingEnabled);
+            telaEdicao.setFuncionario(obj);
             
             telaEdicao.setVisible(true);
             
-            Cliente obj_r = telaEdicao.getCliente();
+            Funcionario obj_r = telaEdicao.getFuncionario();
             
             if (obj_r != null) {
                 try {
                     dao.persist(obj_r);
                     loadTable();
                 } catch (Exception e) {
-                    System.err.println("Erro ao editar cliente:\n" + e);
+                    System.err.println("Erro ao editar funcionário:\n" + e);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Cliente!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Funcionário!");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        if (tblClientes.getSelectedRow() != 1) {
-            Cliente obj = (Cliente) tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
+        if (tblFuncionarios.getSelectedRow() != 1) {
+            Funcionario obj = (Funcionario) tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0);
             
             int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover " + obj + "?");
             
@@ -218,22 +200,22 @@ public class ListaClienteJF extends javax.swing.JFrame {
                 try {
                     dao.remover(obj);
                     loadTable();
-                    JOptionPane.showMessageDialog(rootPane, "Cliente removido com sucesso!");
+                    JOptionPane.showMessageDialog(rootPane, "Funcionário removido com sucesso!");
                 } catch (Exception e) {
-                    System.err.println("Erro ao remover cliente:\n" + e);
+                    System.err.println("Erro ao editar funcionário:\n" + e);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Cliente!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Funcionário!");
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
-        if (tblClientes.getSelectedRow() != -1) {
-            Cliente obj = (Cliente) tblClientes.getModel().getValueAt(tblClientes.getSelectedRow(), 0);
+        if (tblFuncionarios.getSelectedRow() != -1) {
+            Funcionario obj = (Funcionario) tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0);
             JOptionPane.showMessageDialog(rootPane, obj.showData());
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Cliente!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Funcionário!");
         }
     }//GEN-LAST:event_btnInfoActionPerformed
 
@@ -254,20 +236,20 @@ public class ListaClienteJF extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListaClienteJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaFuncionarioJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListaClienteJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaFuncionarioJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListaClienteJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaFuncionarioJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListaClienteJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaFuncionarioJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListaClienteJF().setVisible(true);
+                new ListaFuncionarioJF().setVisible(true);
             }
         });
     }
@@ -278,8 +260,6 @@ public class ListaClienteJF extends javax.swing.JFrame {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRemover;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable tblClientes;
+    private javax.swing.JTable tblFuncionarios;
     // End of variables declaration//GEN-END:variables
 }

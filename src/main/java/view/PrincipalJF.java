@@ -30,6 +30,7 @@ public class PrincipalJF extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mRegistros = new javax.swing.JMenu();
         miCliente = new javax.swing.JMenuItem();
+        miFuncionario = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,6 +43,14 @@ public class PrincipalJF extends javax.swing.JFrame {
             }
         });
         mRegistros.add(miCliente);
+
+        miFuncionario.setText("Funcionário");
+        miFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miFuncionarioActionPerformed(evt);
+            }
+        });
+        mRegistros.add(miFuncionario);
 
         jMenuBar1.add(mRegistros);
 
@@ -65,6 +74,11 @@ public class PrincipalJF extends javax.swing.JFrame {
         ListaClienteJF telaCliente = new ListaClienteJF();
         telaCliente.setVisible(true);
     }//GEN-LAST:event_miClienteActionPerformed
+
+    private void miFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miFuncionarioActionPerformed
+        ListaFuncionarioJF telaFuncionario = new ListaFuncionarioJF();
+        telaFuncionario.setVisible(true);
+    }//GEN-LAST:event_miFuncionarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,5 +119,6 @@ public class PrincipalJF extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu mRegistros;
     private javax.swing.JMenuItem miCliente;
+    private javax.swing.JMenuItem miFuncionario;
     // End of variables declaration//GEN-END:variables
 }
