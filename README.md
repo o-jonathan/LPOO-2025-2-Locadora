@@ -58,3 +58,4 @@ O sistema, atualmente, pode:
 
 - Registrar clientes.
 - Registrar funcionários.
+- Registrar jogos.
