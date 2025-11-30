@@ -14,7 +14,7 @@ import model.Locacao;
  * @author Jonathan
  */
 public class LocacaoDAO extends PersistenciaJPA {
-    public List<Locacao> listaClientes() {
+    public List<Locacao> listaLocacoes() {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Locacao> query

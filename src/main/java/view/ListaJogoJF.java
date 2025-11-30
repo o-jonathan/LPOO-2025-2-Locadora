@@ -6,35 +6,34 @@ package view;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Funcionario;
-import model.dao.FuncionarioDAO;
+import model.Jogo;
+import model.dao.JogoDAO;
 
 /**
  *
  * @author Jonathan
  */
-public class ListaFuncionarioJF extends javax.swing.JFrame {
+public class ListaJogoJF extends javax.swing.JFrame {
     
-    FuncionarioDAO dao;
+    JogoDAO dao;
 
     /**
-     * Creates new form ListaFuncionarioJF
+     * Creates new form ListaJogoJF
      */
-    public ListaFuncionarioJF() {
+    public ListaJogoJF() {
         initComponents();
-        dao = new FuncionarioDAO();
+        dao = new JogoDAO();
         loadTable();
     }
     
     public void loadTable() {
-        DefaultTableModel model = (DefaultTableModel) tblFuncionarios.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblJogos.getModel();
         model.setNumRows(0);
         
-        for (Funcionario obj : dao.listaFuncionarios()) {
+        for (Jogo obj : dao.listaJogos()) {
             Object[] linha = {
                 obj,
-                obj.getCpf(),
-                obj.getSalario()
+                obj.getLocadoAsString()
             };
             model.addRow(linha);
         }
@@ -50,28 +49,27 @@ public class ListaFuncionarioJF extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblFuncionarios = new javax.swing.JTable();
-        btnEditar = new javax.swing.JButton();
-        btnInfo = new javax.swing.JButton();
+        tblJogos = new javax.swing.JTable();
         btnNovo = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
+        btnInfo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(510, 450));
 
-        tblFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+        tblJogos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "CPF", "Salário"
+                "Nome", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -82,26 +80,19 @@ public class ListaFuncionarioJF extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblFuncionarios);
-
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
-        btnInfo.setText("Mais Informações");
-        btnInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInfoActionPerformed(evt);
-            }
-        });
+        jScrollPane1.setViewportView(tblJogos);
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -112,14 +103,20 @@ public class ListaFuncionarioJF extends javax.swing.JFrame {
             }
         });
 
+        btnInfo.setText("Mais Informações");
+        btnInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInfoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(65, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -127,72 +124,79 @@ public class ListaFuncionarioJF extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRemover)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInfo)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addComponent(btnInfo))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEditar, btnNovo, btnRemover});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(75, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRemover)
                     .addComponent(btnNovo)
                     .addComponent(btnEditar)
+                    .addComponent(btnRemover)
                     .addComponent(btnInfo))
-                .addGap(49, 49, 49))
+                .addGap(44, 44, 44))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
+        if (tblJogos.getSelectedRow() != -1) {
+            Jogo obj = (Jogo) tblJogos.getModel().getValueAt(tblJogos.getSelectedRow(), 0);
+            JOptionPane.showMessageDialog(rootPane, obj.showData());
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Jogo!");
+        }
+    }//GEN-LAST:event_btnInfoActionPerformed
+
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        CadastroFuncionarioJD telaCadastro = new CadastroFuncionarioJD(this, rootPaneCheckingEnabled);
+        CadastroJogoJD telaCadastro = new CadastroJogoJD(this, rootPaneCheckingEnabled);
         telaCadastro.setVisible(true);
         
-        Funcionario novo = telaCadastro.getFuncionario();
+        Jogo novo = telaCadastro.getJogo();
         
         if (novo != null) {
             try {
                 dao.persist(novo);
                 loadTable();
             } catch (Exception e) {
-                System.err.println("Erro ao adicionar funcionário:\n" + e);
+                System.err.println("Erro ao adicionar Jogo:\n" + e);
             }
         }
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblFuncionarios.getSelectedRow() != 1) {
-            Funcionario obj = (Funcionario) tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0);
+        if (tblJogos.getSelectedRow() != -1) {
+            Jogo obj = (Jogo) tblJogos.getModel().getValueAt(tblJogos.getSelectedRow(), 0);
             
-            CadastroFuncionarioJD telaEdicao = new CadastroFuncionarioJD(this, rootPaneCheckingEnabled);
-            telaEdicao.setFuncionario(obj);
+            CadastroJogoJD telaEdicao = new CadastroJogoJD(this, rootPaneCheckingEnabled);
+            telaEdicao.setJogo(obj);
             
             telaEdicao.setVisible(true);
             
-            Funcionario obj_r = telaEdicao.getFuncionario();
+            Jogo obj_r = telaEdicao.getJogo();
             
             if (obj_r != null) {
                 try {
                     dao.persist(obj_r);
                     loadTable();
                 } catch (Exception e) {
-                    System.err.println("Erro ao editar funcionário:\n" + e);
+                    System.err.println("Erro ao editar jogo:\n" + e);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Funcionário!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Jogo!");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        if (tblFuncionarios.getSelectedRow() != 1) {
-            Funcionario obj = (Funcionario) tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0);
+        if (tblJogos.getSelectedRow() != -1) {
+            Jogo obj = (Jogo) tblJogos.getModel().getValueAt(tblJogos.getSelectedRow(), 0);
             
             int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover " + obj + "?");
             
@@ -200,24 +204,15 @@ public class ListaFuncionarioJF extends javax.swing.JFrame {
                 try {
                     dao.remover(obj);
                     loadTable();
-                    JOptionPane.showMessageDialog(rootPane, "Funcionário removido com sucesso!");
+                    JOptionPane.showMessageDialog(rootPane, "Jogo removido com sucesso!");
                 } catch (Exception e) {
-                    System.err.println("Erro ao remover funcionário:\n" + e);
+                    System.err.println("Erro ao remover jogo:\n" + e);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Funcionário!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Jogo!");
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
-
-    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
-        if (tblFuncionarios.getSelectedRow() != -1) {
-            Funcionario obj = (Funcionario) tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0);
-            JOptionPane.showMessageDialog(rootPane, obj.showData());
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Funcionário!");
-        }
-    }//GEN-LAST:event_btnInfoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,20 +231,20 @@ public class ListaFuncionarioJF extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListaFuncionarioJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaJogoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListaFuncionarioJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaJogoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListaFuncionarioJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaJogoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListaFuncionarioJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaJogoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListaFuncionarioJF().setVisible(true);
+                new ListaJogoJF().setVisible(true);
             }
         });
     }
@@ -260,6 +255,6 @@ public class ListaFuncionarioJF extends javax.swing.JFrame {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRemover;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblFuncionarios;
+    private javax.swing.JTable tblJogos;
     // End of variables declaration//GEN-END:variables
 }

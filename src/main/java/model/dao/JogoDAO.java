@@ -14,7 +14,7 @@ import model.Jogo;
  * @author Jonathan
  */
 public class JogoDAO extends PersistenciaJPA {
-    public List<Jogo> listaClientes() {
+    public List<Jogo> listaJogos() {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Jogo> query

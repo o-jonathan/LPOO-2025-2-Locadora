@@ -14,7 +14,7 @@ import model.Funcionario;
  * @author Jonathan
  */
 public class FuncionarioDAO extends PersistenciaJPA {
-    public List<Funcionario> listaClientes() {
+    public List<Funcionario> listaFuncionarios() {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Funcionario> query

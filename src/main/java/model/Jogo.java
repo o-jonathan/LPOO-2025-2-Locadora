@@ -82,6 +82,9 @@ public class Jogo {
     }
     
     /* Locado */
+    public String getLocadoAsString() {
+        return locado?"Locado":"Disponível";
+    }
     public boolean isLocado() {
         return locado;
     }
