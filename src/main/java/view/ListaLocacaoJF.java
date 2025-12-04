@@ -4,36 +4,40 @@
  */
 package view;
 
+import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Jogo;
-import model.dao.JogoDAO;
+import model.Locacao;
+import model.Util;
+import model.dao.LocacaoDAO;
 
 /**
  *
  * @author Jonathan
  */
-public class ListaJogoJF extends javax.swing.JFrame {
-    
-    JogoDAO dao;
+public class ListaLocacaoJF extends javax.swing.JFrame {
+
+    LocacaoDAO dao;
 
     /**
-     * Creates new form ListaJogoJF
+     * Creates new form ListaLocacaoJF
      */
-    public ListaJogoJF() {
+    public ListaLocacaoJF() {
         initComponents();
-        dao = new JogoDAO();
+        dao = new LocacaoDAO();
         loadTable();
     }
-    
+
     public void loadTable() {
-        DefaultTableModel model = (DefaultTableModel) tblJogos.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblLocacoes.getModel();
         model.setNumRows(0);
-        
-        for (Jogo obj : dao.listaJogos()) {
+
+        for (Locacao obj : dao.listaLocacoes()) {
             Object[] linha = {
                 obj,
-                obj.getLocadoAsString()
+                obj.getCliente(),
+                Util.formatDateTime(obj.getDataLocacao()),
+                Util.formatDateTime(obj.getDataDevolucao())
             };
             model.addRow(linha);
         }
@@ -49,28 +53,29 @@ public class ListaJogoJF extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblJogos = new javax.swing.JTable();
+        tblLocacoes = new javax.swing.JTable();
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
         btnInfo = new javax.swing.JButton();
+        btnDevolver = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tblJogos.setModel(new javax.swing.table.DefaultTableModel(
+        tblLocacoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Estado"
+                "Jogo", "Cliente", "Locação", "Devolução"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -81,7 +86,7 @@ public class ListaJogoJF extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblJogos);
+        jScrollPane1.setViewportView(tblLocacoes);
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -111,119 +116,158 @@ public class ListaJogoJF extends javax.swing.JFrame {
             }
         });
 
+        btnDevolver.setText("Devolver");
+        btnDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolverActionPerformed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Gerenciar Jogos");
+        jLabel1.setText("Gerenciar Locações");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(65, Short.MAX_VALUE)
+                .addContainerGap(85, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNovo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRemover)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnInfo))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(60, 60, 60))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDevolver)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnNovo)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnEditar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnRemover)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnInfo))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(74, 74, 74))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(176, 176, 176))))
+                        .addGap(225, 225, 225))))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDevolver, btnEditar, btnNovo, btnRemover});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovo)
                     .addComponent(btnEditar)
                     .addComponent(btnRemover)
                     .addComponent(btnInfo))
-                .addGap(44, 44, 44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDevolver)
+                .addGap(36, 36, 36))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
-        if (tblJogos.getSelectedRow() != -1) {
-            Jogo obj = (Jogo) tblJogos.getModel().getValueAt(tblJogos.getSelectedRow(), 0);
+        if (tblLocacoes.getSelectedRow() != -1) {
+            Locacao obj = (Locacao) tblLocacoes.getModel().getValueAt(tblLocacoes.getSelectedRow(), 0);
             JOptionPane.showMessageDialog(rootPane, obj.showData());
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Jogo!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione uma Locação!");
         }
     }//GEN-LAST:event_btnInfoActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        CadastroJogoJD telaCadastro = new CadastroJogoJD(this, rootPaneCheckingEnabled);
+        CadastroLocacaoJD telaCadastro = new CadastroLocacaoJD(this, rootPaneCheckingEnabled);
         telaCadastro.setVisible(true);
-        
-        Jogo novo = telaCadastro.getJogo();
-        
-        if (novo != null) {
+
+        Locacao obj = telaCadastro.getLocacao();
+
+        if (obj != null) {
             try {
-                dao.persist(novo);
+                dao.persist(obj);
                 loadTable();
             } catch (Exception e) {
-                System.err.println("Erro ao adicionar Jogo:\n" + e);
+                System.err.println("Erro ao adicionar locação:\n" + e);
             }
         }
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblJogos.getSelectedRow() != -1) {
-            Jogo obj = (Jogo) tblJogos.getModel().getValueAt(tblJogos.getSelectedRow(), 0);
-            
-            CadastroJogoJD telaEdicao = new CadastroJogoJD(this, rootPaneCheckingEnabled);
-            telaEdicao.setJogo(obj);
-            
+        if (tblLocacoes.getSelectedRow() != -1) {
+            Locacao obj = (Locacao) tblLocacoes.getModel().getValueAt(tblLocacoes.getSelectedRow(), 0);
+            CadastroLocacaoJD telaEdicao = new CadastroLocacaoJD(this, rootPaneCheckingEnabled);
+
+            telaEdicao.setLocacao(obj);
             telaEdicao.setVisible(true);
-            
-            Jogo obj_r = telaEdicao.getJogo();
-            
+
+            Locacao obj_r = telaEdicao.getLocacao();
+
             if (obj_r != null) {
                 try {
                     dao.persist(obj_r);
                     loadTable();
                 } catch (Exception e) {
-                    System.err.println("Erro ao editar jogo:\n" + e);
+                    System.err.println("Erro ao editar locação:\n" + e);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Jogo!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione uma Locação!");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        if (tblJogos.getSelectedRow() != -1) {
-            Jogo obj = (Jogo) tblJogos.getModel().getValueAt(tblJogos.getSelectedRow(), 0);
+        if (tblLocacoes.getSelectedRow() != -1) {
+            Locacao obj = (Locacao) tblLocacoes.getModel().getValueAt(tblLocacoes.getSelectedRow(), 0);
             
-            int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover " + obj + "?");
-            
+            String txtObj = obj.getProduto().toString() + " / " + obj.getCliente().toString() + " / " + Util.formatDateTime(obj.getDataLocacao());
+            int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover " + txtObj + "?");
+
             if (op == JOptionPane.YES_OPTION) {
                 try {
+                    obj.getProduto().setLocado(false);
                     dao.remover(obj);
                     loadTable();
-                    JOptionPane.showMessageDialog(rootPane, "Jogo removido com sucesso!");
+                    JOptionPane.showMessageDialog(rootPane, "Locação removida com sucesso!");
                 } catch (Exception e) {
-                    System.err.println("Erro ao remover jogo:\n" + e);
+                    System.err.println("Erro ao remover locação:\n" + e);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um Jogo!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione uma Locação!");
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
+        if (tblLocacoes.getSelectedRow() != -1) {
+            Locacao obj = (Locacao) tblLocacoes.getModel().getValueAt(tblLocacoes.getSelectedRow(), 0);
+            
+            String txtObj = obj.getProduto().toString() + " / " + obj.getCliente().toString() + " / " + Util.formatDateTime(obj.getDataLocacao());
+            int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja devolver " + txtObj + "?");
+            
+            obj.getProduto().setLocado(false);
+            obj.setDataDevolucao(LocalDateTime.now());
+
+            if (op == JOptionPane.YES_OPTION) {
+                try {
+                    dao.persist(obj);
+                    loadTable();
+                    JOptionPane.showMessageDialog(rootPane, "Locação devolvida com sucesso!");
+                } catch (Exception e) {
+                    System.err.println("Erro ao devolver locação:\n" + e);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Selecione uma Locação!");
+        }
+    }//GEN-LAST:event_btnDevolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,31 +286,32 @@ public class ListaJogoJF extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListaJogoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaLocacaoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListaJogoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaLocacaoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListaJogoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaLocacaoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListaJogoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaLocacaoJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListaJogoJF().setVisible(true);
+                new ListaLocacaoJF().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDevolver;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRemover;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblJogos;
+    private javax.swing.JTable tblLocacoes;
     // End of variables declaration//GEN-END:variables
 }

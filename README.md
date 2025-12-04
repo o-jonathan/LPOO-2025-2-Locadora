@@ -1,6 +1,6 @@
 # LPOO 2025/2 — Locadora OJogos
 
-O sistema Locadora OJogos consiste na gerência de uma locadora de jogos, possibilitando registrar clientes, funcionários, jogos e locações.
+O sistema Locadora OJogos consiste na gerência de uma locadora de jogos, possibilitando Registrar e Gerenciar clientes, funcionários, jogos e locações.
 
 
 ## Diagrama de Classes
@@ -12,6 +12,7 @@ classDiagram
         class Cliente
         class Funcionario
         class Jogo
+        class FormaPGTO
         class Locacao
     }
 
@@ -37,6 +38,12 @@ classDiagram
         - locado : boolean
     }
 
+    class FormaPGTO {
+        <<enumeration>>
+        AVISTA
+        PRAZO
+    }
+
     class Locacao {
         - id : int
         - dataLocacao : LocalDateTime
@@ -50,12 +57,14 @@ classDiagram
     Cliente --o Locacao
     Funcionario --o Locacao
     Jogo --o Locacao
+    FormaPGTO --o Locacao
 ```
 
 ## Features
 
 O sistema, atualmente, pode:
 
-- Registrar clientes.
-- Registrar funcionários.
-- Registrar jogos.
+- Registrar e Gerenciar clientes.
+- Registrar e Gerenciar funcionários.
+- Registrar e Gerenciar jogos.
+- Registrar e Gerenciar Locações.

@@ -21,6 +21,13 @@ public class Util {
     
     
     
+    /* Getters and Setters */
+    public static DateTimeFormatter getDateTimeF() {
+        return datetimef;
+    }
+    
+    
+    
     /* Methods */
     public static String formatDouble(double number) {
         return doublef.format(number);

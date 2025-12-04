@@ -27,6 +27,8 @@ public class PrincipalJF extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnLocacoes = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mRegistros = new javax.swing.JMenu();
         miCliente = new javax.swing.JMenuItem();
@@ -34,6 +36,16 @@ public class PrincipalJF extends javax.swing.JFrame {
         miJogo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnLocacoes.setText("Gerenciar Locações");
+        btnLocacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocacoesActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 0, 48)); // NOI18N
+        jLabel1.setText("OJogos");
 
         mRegistros.setText("Registros");
 
@@ -69,11 +81,23 @@ public class PrincipalJF extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(btnLocacoes))
+                    .addComponent(jLabel1))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(btnLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,6 +117,11 @@ public class PrincipalJF extends javax.swing.JFrame {
         ListaJogoJF telaJogo = new ListaJogoJF();
         telaJogo.setVisible(true);
     }//GEN-LAST:event_miJogoActionPerformed
+
+    private void btnLocacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocacoesActionPerformed
+        ListaLocacaoJF telaLocacao = new ListaLocacaoJF();
+        telaLocacao.setVisible(true);
+    }//GEN-LAST:event_btnLocacoesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,6 +159,8 @@ public class PrincipalJF extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLocacoes;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu mRegistros;
     private javax.swing.JMenuItem miCliente;
