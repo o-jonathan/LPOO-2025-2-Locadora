@@ -150,6 +150,10 @@ public class CadastroLocacaoJD extends javax.swing.JDialog {
             }
         });
 
+        txtDevolucao.setEditable(false);
+        txtDevolucao.setBackground(new java.awt.Color(204, 204, 204));
+        txtDevolucao.setEnabled(false);
+
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,7 +304,9 @@ public class CadastroLocacaoJD extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtPrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrazoActionPerformed
-        
+        LocalDateTime data = LocalDateTime.parse(txtData.getText(), Util.getDateTimeF()).withHour(23).withMinute(59).withSecond(59).withNano(0);
+        data = data.plusDays(Long.parseLong(txtPrazo.getText()));
+        txtDevolucao.setText(Util.formatDateTime(data));
     }//GEN-LAST:event_txtPrazoActionPerformed
 
     private void txtPrazoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtPrazoPropertyChange
